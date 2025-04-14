@@ -30,3 +30,29 @@
 *.exe
 *.out
 *.app
+
+# macOS system files
+.DS_Store
+
+# CLion & JetBrains
+.idea/
+*.iml
+
+
+# CMake build directories
+cmake-build-debug/
+cmake-build-release/
+CMakeFiles/
+CMakeCache.txt
+build/
+Makefile
+*.ninja
+*.log
+
+# Crow (if included directly)
+include/
+
+# Test cache/output
+Testing/
+test/
+
