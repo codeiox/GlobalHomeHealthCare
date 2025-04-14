@@ -1,0 +1,4 @@
+/Users/codex/Developer/Job_training_project/GlobalHomeHealthCare-main/cmake-build-debug/CMakeFiles/GLOBAL_HOME_HEALTH_CARE.dir
+/Users/codex/Developer/Job_training_project/GlobalHomeHealthCare-main/cmake-build-debug/CMakeFiles/test.dir
+/Users/codex/Developer/Job_training_project/GlobalHomeHealthCare-main/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/codex/Developer/Job_training_project/GlobalHomeHealthCare-main/cmake-build-debug/CMakeFiles/rebuild_cache.dir
