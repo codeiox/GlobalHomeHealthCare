@@ -14,6 +14,10 @@ find_package(Threads REQUIRED)
 #openSSL
 find_package(OpenSSL REQUIRED)
 
+
+#add definition
+add_definitions(-DENABLE_DOTENV)
+
 # Include directories (add the path to your CxxTest installation)
 include_directories(/opt/homebrew/opt/cxxtest/include)
 
@@ -30,7 +34,7 @@ include_directories(/usr/local/mysql-connector-c++-9.2.0/lib64)
 include_directories(/usr/local/mysql/include)
 include_directories(/usr/local/mysql-connector-c++-9.2/include)
 
-
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/dotenv)
 
 
 # Set the path to the cxxtestgen script
@@ -47,11 +51,10 @@ add_executable(${PROJECT_NAME}
         main.cpp
         headers/Application.h
         src/Application.cpp
-        src/Date.cpp
-        headers/Date.h
-        src/Time.cpp
-        headers/Time.h
         headers/Application.h
+        src/routesSetUp.cpp
+        headers/routesSetUp.h
+        headers/config.h
 
 )
 

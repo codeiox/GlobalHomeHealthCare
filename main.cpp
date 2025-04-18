@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include "headers/Application.h"
-
+#include "headers/routesSetUp.h"
 
 
 int main(int argc, const char* argv[]) {
@@ -12,17 +12,16 @@ int main(int argc, const char* argv[]) {
     // Initialize the Crow application
     crow::SimpleApp app;
 
+    // Calling function to route HTTPS request
+    setupRoutes(app);
 
-    // Define a route for the root URL
-    CROW_ROUTE(app, "/") ([](){
-        return "Hello world\n";
-    });
+    //Tells Crow to hide less important logs
+    //app.loglevel(crow::LogLevel::Warning);
 
-    //Enable SSL for HTTPS request
-    app.port(443)
-            .ssl_file("cert.pem", "key.pem")
-            .multithreaded()
-            .run();
+
+    //Enable SSL for HTTPS request handling
+    // secure the connection using cert.pem and key.pem self-signed certificate
+    app.port(18080).ssl_file("../ssl/cert.pem", "../ssl/key.pem").bindaddr("127.0.0.1").multithreaded().run();
 
 
     return 0;

@@ -5,9 +5,8 @@
 #ifndef JOB_APPLICATION_H
 #define JOB_APPLICATION_H
 #include <iostream>
-#include "Date.h"
-#include "Time.h"
 #include <string>
+#include <mysqlx/xdevapi.h>
 
 
 // base class for appointment
@@ -26,17 +25,15 @@ private:
     std::string zip_code;
     bool is_over18;
     std::string description;
-    // Time and Date object
-    Time time;
-    Date date;
     std::string resumeFilename;
 
 public:
     // Default constructor
     Application() = default; //Tells the compiler to auto-generate the default constructor.
+
     Application(std::string& full_name, std::string& email, std::string& phone_number, std::string& address,
                 int& apt_number, std::string& city, std::string& state,
-                std::string& zip_code, bool is_over18, std::string& description, Time time, Date date, std::string& resumeFilename);
+                std::string& zip_code, bool is_over18, std::string& description/*, std::string& resumeFilename*/);
 
     // Setter and getter
     void SetName(std::string& full_name);
@@ -54,9 +51,7 @@ public:
     void SetIsOver18(bool is_over18);
     void SetDescription(std::string& description);
 
-    void SetTime(Time& time);
-    void SetDate(Date& date);
-    void SetResumeFilename(std::string& resumeFilename);
+    //void SetResumeFilename(std::string& resumeFilename);
 
     const std::string& GetName() const;
     const std::string& GetEmail() const;
@@ -72,10 +67,9 @@ public:
     const bool& GetIsOver18() const;
 
     const std::string& GetDescription() const;
-    const Time& GetTime() const;
 
-    const Date& GetDate() const;
-    const std::string& GetResumeFilename() const;
+    //const std::string& GetResumeFilename() const;
+
 
 
 

@@ -5,12 +5,10 @@
 
 // constructor
 Application::Application(std::string& full_name, std::string& email, std::string& phone_number, std::string& address, int& apt_number,
-                         std::string& city, std::string& state,
-                         std::string& zip_code, bool is_over18, std::string& description, Time time, Date date,
-                         std::string& resumeFilename) : full_name(full_name), email(email), phone_number(phone_number)
-                         ,address(address), apt_number(apt_number), city(city), state(state), zip_code(zip_code),
-                         is_over18(is_over18), description(description), time(time),
-                         date(date), resumeFilename(resumeFilename) { }
+                         std::string& city, std::string& state,std::string& zip_code, bool is_over18, std::string& description/*,
+                         std::string& resumeFilename*/) : full_name(full_name), email(email), phone_number(phone_number) ,address(address),
+                         apt_number(apt_number), city(city), state(state), zip_code(zip_code),
+                         is_over18(is_over18), description(description)/*, resumeFilename(resumeFilename)*/ { }
 
 
 // Setter
@@ -47,21 +45,15 @@ void Application::SetZipCode(std::string& zip_code) {
 void Application::SetIsOver18(bool is_over18) {
     this->is_over18 = is_over18;
 }
-void Application::SetTime(Time& time) {
-    this->time = time;
-}
 
-void Application::SetDate(Date& date) {
-    this->date = date;
-}
 
 void Application::SetDescription(std::string& description) {
     this->description = description;
 }
 
-void Application::SetResumeFilename(std::string& resumeFilename) {
+/*void Application::SetResumeFilename(std::string& resumeFilename) {
     this->resumeFilename = resumeFilename;
-}
+}*/
 
 
 
@@ -92,15 +84,10 @@ const std::string& Application::GetZipCode() const {
 const bool& Application::GetIsOver18() const {
     return is_over18;
 }
-const std::string& Application::GetResumeFilename() const {
+/*const std::string& Application::GetResumeFilename() const {
     return resumeFilename;
-}
-const Time& Application::GetTime() const {
-    return time;
-}
-const Date& Application::GetDate() const {
-    return date;
-}
+}*/
+
 const std::string& Application::GetEmail() const {
     return email;
 }
