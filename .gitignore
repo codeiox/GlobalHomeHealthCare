@@ -50,8 +50,6 @@ Makefile
 *.ninja
 *.log
 
-# Crow (if included directly)
-include/
 
 # Test cache/output
 Testing/
