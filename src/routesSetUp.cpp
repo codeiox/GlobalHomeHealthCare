@@ -139,7 +139,8 @@ void setupRoutes(crow::SimpleApp& app) {
     CROW_ROUTE(app, "/assets/carousel/<string>")([](const std::string& file) {
         std::ifstream f("../docs/assets/carousel/" + file, std::ios::binary);
         if (!f) return crow::response(404);
-        std::ostringstream buffer; buffer << f.rdbuf();
+        std::ostringstream buffer;
+        buffer << f.rdbuf();
         crow::response res(buffer.str());
         res.set_header("Content-Type", "image/png");
         return res;
@@ -150,14 +151,13 @@ void setupRoutes(crow::SimpleApp& app) {
         std::ifstream f("../docs/assets/about_page_img/" + file, std::ios::binary);
 
         if (!f) return crow::response(404);
-        std::ostringstream buffer; buffer << f.rdbuf();
-        crow::response res(buffer.str());
-        res.set_header("Content-Type", "image/png");
+        std::ostringstream buffer;
+        buffer << f.rdbuf(); // redirect buffer
+        crow::response res(buffer.str()); // creates HTTP response (The binary file data is turned into the HTTP response body.)
+        res.set_header("Content-Type", "image/png"); //This tells the browser it’s receiving a PNG image.
         return res;
 
     });
-
-
 
     // favicon.ico icon routing
     CROW_ROUTE(app, "/favicon.ico")([] {
@@ -170,6 +170,10 @@ void setupRoutes(crow::SimpleApp& app) {
             res.set_header("Content-Type", "image/x-icon");
             return res;
     });
+
+
+    // TODO: need to implement route for privacy policy and terms and conditions files
+
 
 
 
