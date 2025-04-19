@@ -145,6 +145,19 @@ void setupRoutes(crow::SimpleApp& app) {
         return res;
     });
 
+    // about page image
+    CROW_ROUTE(app, "/assets/about_page_img/<string>")([](const std::string& file) {
+        std::ifstream f("../docs/assets/about_page_img/" + file, std::ios::binary);
+
+        if (!f) return crow::response(404);
+        std::ostringstream buffer; buffer << f.rdbuf();
+        crow::response res(buffer.str());
+        res.set_header("Content-Type", "image/png");
+        return res;
+
+    });
+
+
 
     // favicon.ico icon routing
     CROW_ROUTE(app, "/favicon.ico")([] {
