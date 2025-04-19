@@ -12,4 +12,7 @@
 
 void setupRoutes(crow::SimpleApp& app);
 
+// validated reCAPTCHA
+bool verifyRecaptcha(const std::string& token, const std::string& secretKey);
+
 #endif //GLOBAL_HOME_HEALTH_CARE_ROUTESSETUP_H

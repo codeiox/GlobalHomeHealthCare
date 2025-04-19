@@ -3,12 +3,42 @@
 //
 #include "../headers/routesSetUp.h"
 #include "../headers/config.h"
+#include "curl/curl.h"
+#include <sstream>
+#include <string>
+
+// validated reCAPTCHA
+bool verifyRecaptcha(const std::string& token, const std::string& secretKey) {
+    CURL* curl = curl_easy_init(); //This creates and initializes a new CURL handle
+    if (!curl) {
+        return false;
+    }
+    std::string postFields = "secret=" + secretKey + "&response=" + token;
+    std::string response;
+
+    curl_easy_setopt(curl, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postFields.c_str());
+
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION,
+                     +[](char* ptr, size_t size, size_t nmemb, std::string* data) {
+        data->append(ptr, size * nmemb);
+        return size * nmemb;
+    });
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+    CURLcode res = curl_easy_perform(curl);
+    curl_easy_cleanup(curl);
+
+    return res == CURLE_OK && response.find("\"success\": true") != std::string::npos;
+}
+
+
 
 
 void setupRoutes(crow::SimpleApp& app) {
 
 
-    // Serves html, css, and js files
+    // Serves index.html page
     CROW_ROUTE(app, "/")([]() {
         std::ifstream file("../docs/index.html");
         if (!file) return crow::response(404);
@@ -17,6 +47,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
+    // Serves ourservice.html page
     CROW_ROUTE(app, "/ourservice")([]() {
         std::ifstream file("../docs/ourservice.html");
         if (!file) return crow::response(404);
@@ -25,6 +56,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
+    // Serves about.html page
     CROW_ROUTE(app, "/about")([]() {
         std::ifstream file("../docs/about.html");
         if (!file) return crow::response(404);
@@ -33,7 +65,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
-
+    // Serves form.html page
     CROW_ROUTE(app, "/form")([]() {
         std::ifstream file("../docs/form.html");
         if (!file) return crow::response(404);
@@ -42,7 +74,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
-
+    // Serves employment.html page
     CROW_ROUTE(app, "/employment")([]() {
         std::ifstream file("../docs/employment.html");
         if (!file) return crow::response(404);
@@ -50,6 +82,8 @@ void setupRoutes(crow::SimpleApp& app) {
         buffer << file.rdbuf();
         return crow::response(buffer.str());
     });
+
+    // Serves resources.html page
     CROW_ROUTE(app, "/resources")([]() {
         std::ifstream file("../docs/resources.html");
         if (!file) return crow::response(404);
@@ -58,7 +92,20 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
+    // serve contact page
+    CROW_ROUTE(app, "/contact")([]() {
+        std::ifstream file("../docs/contact.html");
 
+        if (!file) {
+            return crow::response(404);
+        }
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        return crow::response(buffer.str());
+    });
+
+
+    // serves css file
     CROW_ROUTE(app, "/css/<string>")([](const std::string& file) {
         std::ifstream f("../docs/css/" + file);
         if (!f) return crow::response(404);
@@ -68,6 +115,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return res;
     });
 
+    // serves js file
     CROW_ROUTE(app, "/js/<string>")([](const std::string& file) {
         std::ifstream f("../docs/js/" + file);
         if (!f) return crow::response(404);
@@ -77,6 +125,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return res;
     });
 
+    // serves logo
     CROW_ROUTE(app, "/assets/logo/<string>")([](const std::string& file) {
         std::ifstream f("../docs/assets/logo/" + file, std::ios::binary);
         if (!f) return crow::response(404);
@@ -86,6 +135,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return res;
     });
 
+    // serves carousel images
     CROW_ROUTE(app, "/assets/carousel/<string>")([](const std::string& file) {
         std::ifstream f("../docs/assets/carousel/" + file, std::ios::binary);
         if (!f) return crow::response(404);
@@ -96,12 +146,39 @@ void setupRoutes(crow::SimpleApp& app) {
     });
 
 
+    // favicon.ico icon routing
+    CROW_ROUTE(app, "/favicon.ico")([] {
+        std::ifstream file("../docs/favicon.ico", std::ios::binary);
+            if (!file) return crow::response(404);
+
+            std::ostringstream buffer;
+            buffer << file.rdbuf();
+            auto res = crow::response(buffer.str());
+            res.set_header("Content-Type", "image/x-icon");
+            return res;
+    });
+
+
+
 
     // Define a route for the root URL
     CROW_ROUTE(app, "/submit").methods("POST"_method)
     ([](const crow::request& req) {
 
         auto body = crow::json::load(req.body);
+
+        // loading config file
+        Config config_env;
+        config_env.load_env();
+
+        //reCaptcha validation
+        std::string recaptchaToken = std::string(body["recaptcha_token"]);
+        const char* secret = std::getenv("RECAPTCHA_SECRET");
+
+        if (!verifyRecaptcha(recaptchaToken, secret ? secret : "")) {
+            return crow::response(403, "reCAPTCHA verification failed.");
+        }
+
 
         if (!body) return crow::response(400, "Invalid JSON");
 
@@ -131,12 +208,6 @@ void setupRoutes(crow::SimpleApp& app) {
         appData.SetIsOver18(over18);
         appData.SetDescription(desc);
         //appData.SetResumeFilename(resume);
-
-
-
-        // loading config file
-        Config config_env;
-        config_env.load_env();
 
 
         using namespace mysqlx; // MySQL Connector/C++ API

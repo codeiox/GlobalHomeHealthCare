@@ -38,6 +38,8 @@ DB_HOST=localhost
 DB_NAME=your_database
 DB_USER=your_username
 DB_PASS=your_password
+RECAPTCHA_SECRET=your-secret-key-here
+
 ```
 
 ## Build the Project

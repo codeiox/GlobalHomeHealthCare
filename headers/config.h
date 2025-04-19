@@ -66,6 +66,9 @@ public:
             else if (key == "DB_PASS") {
                 db_pass = value;
             }
+            else if (key == "RECAPTCHA_SECRET") {
+                setenv("RECAPTCHA_SECRET", value.c_str(), 1);
+            }
         }
 
         file.close(); // close the file

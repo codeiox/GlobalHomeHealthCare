@@ -14,6 +14,11 @@ find_package(Threads REQUIRED)
 #openSSL
 find_package(OpenSSL REQUIRED)
 
+#python3 executable
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+
+
+
 
 #add definition
 add_definitions(-DENABLE_DOTENV)
@@ -78,3 +83,7 @@ target_link_libraries(${PROJECT_NAME}
         /usr/local/mysql-connector-c++-9.2.0/lib64/libmysqlcppconnx.dylib
 )
 
+#libcurl library
+find_package(CURL REQUIRED)
+
+target_link_libraries(GLOBAL_HOME_HEALTH_CARE PRIVATE CURL::libcurl)
