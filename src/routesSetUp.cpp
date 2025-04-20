@@ -40,76 +40,120 @@ void setupRoutes(crow::SimpleApp& app) {
 
     // Serves index.html page
     CROW_ROUTE(app, "/")([]() {
-        std::ifstream file("../docs/index.html");
-        if (!file) return crow::response(404);
+        std::ifstream htmlFile("../docs/index.html");
+        if (!htmlFile.is_open())  {
+            return crow::response(404);
+        }
         std::stringstream buffer;
-        buffer << file.rdbuf();
+        buffer << htmlFile.rdbuf();
         return crow::response(buffer.str());
     });
 
     // Serves ourservice.html page
     CROW_ROUTE(app, "/ourservice")([]() {
-        std::ifstream file("../docs/ourservice.html");
-        if (!file) return crow::response(404);
+        std::ifstream htmlFile("../docs/ourservice.html");
+        if (!htmlFile.is_open()) {
+            return crow::response(404);
+        }
         std::stringstream buffer;
-        buffer << file.rdbuf();
+        buffer << htmlFile.rdbuf();
         return crow::response(buffer.str());
     });
 
     // Serves about.html page
     CROW_ROUTE(app, "/about")([]() {
-        std::ifstream file("../docs/about.html");
-        if (!file) return crow::response(404);
+        std::ifstream htmlFile("../docs/about.html");
+        if (!htmlFile.is_open()) {
+            return crow::response(404);
+        }
         std::stringstream buffer;
-        buffer << file.rdbuf();
+        buffer << htmlFile.rdbuf();
         return crow::response(buffer.str());
     });
 
     // Serves form.html page
     CROW_ROUTE(app, "/form")([]() {
-        std::ifstream file("../docs/form.html");
-        if (!file) return crow::response(404);
+        std::ifstream htmlFile("../docs/form.html");
+        if (!htmlFile.is_open()) {
+            return crow::response(404);
+        }
         std::stringstream buffer;
-        buffer << file.rdbuf();
+        buffer << htmlFile.rdbuf();
         return crow::response(buffer.str());
     });
 
     // Serves employment.html page
     CROW_ROUTE(app, "/employment")([]() {
-        std::ifstream file("../docs/employment.html");
-        if (!file) return crow::response(404);
+        std::ifstream htmlFile("../docs/employment.html");
+        if (!htmlFile.is_open()) {
+            return crow::response(404);
+        }
         std::stringstream buffer;
-        buffer << file.rdbuf();
+        buffer << htmlFile.rdbuf();
         return crow::response(buffer.str());
     });
 
     // Serves resources.html page
     CROW_ROUTE(app, "/resources")([]() {
-        std::ifstream file("../docs/resources.html");
-        if (!file) return crow::response(404);
+        std::ifstream htmlFile("../docs/resources.html");
+        if (!htmlFile.is_open()) {
+            return crow::response(404);
+        }
         std::stringstream buffer;
-        buffer << file.rdbuf();
+        buffer << htmlFile.rdbuf();
         return crow::response(buffer.str());
     });
 
     // serve contact page
     CROW_ROUTE(app, "/contact")([]() {
-        std::ifstream file("../docs/contact.html");
+        std::ifstream htmlFile("../docs/contact.html");
 
-        if (!file) {
+        if (!htmlFile) {
             return crow::response(404);
         }
         std::stringstream buffer;
-        buffer << file.rdbuf();
+        buffer << htmlFile.rdbuf();
+        return crow::response(buffer.str());
+    });
+
+    // TODO: route to privacy policy page
+    CROW_ROUTE(app, "/privacy")([]() {
+        std::ifstream htmlFile("../docs/privacy.html"); // full path to file
+
+        if(!htmlFile.is_open()) { // if file not open
+            return crow::response(404);
+        }
+        std::stringstream buffer;
+        buffer << htmlFile.rdbuf(); // redirect buffer
         return crow::response(buffer.str());
     });
 
 
+    // TODO: routes to terms and conditions page
+    CROW_ROUTE(app, "/termsAndConditions") ([]() {
+        std::ifstream htmlFile("../docs/termsAndConditions.html");
+        if (!htmlFile.is_open()) { // if file not open
+            return crow::response(404); // error code 404
+        }
+        std::stringstream buffer; // else
+        buffer << htmlFile.rdbuf(); // redirect buffer
+        return crow::response(buffer.str());
+    });
+
+
+
+    // TODO: Need to route 404 error page
+
+
+
     // serves css file
     CROW_ROUTE(app, "/css/<string>")([](const std::string& file) {
-        std::ifstream f("../docs/css/" + file);
-        if (!f) return crow::response(404);
-        std::stringstream buffer; buffer << f.rdbuf();
+        std::ifstream cssFile("../docs/css/" + file);
+        if (!cssFile.is_open()) {
+            return crow::response(404);
+        }
+        std::stringstream buffer;
+        buffer << cssFile.rdbuf();
         crow::response res(buffer.str());
         res.set_header("Content-Type", "text/css");
         return res;
@@ -117,9 +161,12 @@ void setupRoutes(crow::SimpleApp& app) {
 
     // serves js file
     CROW_ROUTE(app, "/js/<string>")([](const std::string& file) {
-        std::ifstream f("../docs/js/" + file);
-        if (!f) return crow::response(404);
-        std::stringstream buffer; buffer << f.rdbuf();
+        std::ifstream js_File("../docs/js/" + file);
+        if (!js_File.is_open()) {
+            return crow::response(404);
+        }
+        std::stringstream buffer;
+        buffer << js_File.rdbuf();
         crow::response res(buffer.str());
         res.set_header("Content-Type", "application/javascript");
         return res;
@@ -127,9 +174,12 @@ void setupRoutes(crow::SimpleApp& app) {
 
     // serves logo
     CROW_ROUTE(app, "/assets/logo/<string>")([](const std::string& file) {
-        std::ifstream f("../docs/assets/logo/" + file, std::ios::binary);
-        if (!f) return crow::response(404);
-        std::ostringstream buffer; buffer << f.rdbuf();
+        std::ifstream imgContent("../docs/assets/logo/" + file, std::ios::binary);
+        if (!imgContent.is_open()) {
+            return crow::response(404);
+        }
+        std::ostringstream buffer;
+        buffer << imgContent.rdbuf();
         crow::response res(buffer.str());
         res.set_header("Content-Type", "image/png");
         return res;
@@ -137,10 +187,12 @@ void setupRoutes(crow::SimpleApp& app) {
 
     // serves carousel images
     CROW_ROUTE(app, "/assets/carousel/<string>")([](const std::string& file) {
-        std::ifstream f("../docs/assets/carousel/" + file, std::ios::binary);
-        if (!f) return crow::response(404);
+        std::ifstream imgContent("../docs/assets/carousel/" + file, std::ios::binary);
+        if (!imgContent.is_open()) {
+            return crow::response(404);
+        }
         std::ostringstream buffer;
-        buffer << f.rdbuf();
+        buffer << imgContent.rdbuf();
         crow::response res(buffer.str());
         res.set_header("Content-Type", "image/png");
         return res;
@@ -148,11 +200,13 @@ void setupRoutes(crow::SimpleApp& app) {
 
     // about page image
     CROW_ROUTE(app, "/assets/about_page_img/<string>")([](const std::string& file) {
-        std::ifstream f("../docs/assets/about_page_img/" + file, std::ios::binary);
+        std::ifstream imgContent("../docs/assets/about_page_img/" + file, std::ios::binary);
 
-        if (!f) return crow::response(404);
+        if (!imgContent.is_open()) {
+            return crow::response(404);
+        }
         std::ostringstream buffer;
-        buffer << f.rdbuf(); // redirect buffer
+        buffer << imgContent.rdbuf(); // redirect buffer
         crow::response res(buffer.str()); // creates HTTP response (The binary file data is turned into the HTTP response body.)
         res.set_header("Content-Type", "image/png"); //This tells the browser it’s receiving a PNG image.
         return res;
@@ -160,27 +214,25 @@ void setupRoutes(crow::SimpleApp& app) {
     });
 
     // favicon.ico icon routing
-    CROW_ROUTE(app, "/favicon.ico")([] {
-        std::ifstream file("../docs/favicon.ico", std::ios::binary);
-            if (!file) return crow::response(404);
+    CROW_ROUTE(app, "/favicon.ico")([]() {
+        std::ifstream favicon_img("../docs/favicon.ico", std::ios::binary);
+            if (!favicon_img.is_open()) {
+                return crow::response(404);
+            }
 
             std::ostringstream buffer;
-            buffer << file.rdbuf();
+            buffer << favicon_img.rdbuf();
             auto res = crow::response(buffer.str());
             res.set_header("Content-Type", "image/x-icon");
             return res;
     });
 
 
-    // TODO: need to implement route for privacy policy and terms and conditions files
 
 
 
-
-
-    // Define a route for the root URL
-    CROW_ROUTE(app, "/submit").methods("POST"_method)
-    ([](const crow::request& req) {
+    // Define a route for the root URL                    Lambda function
+    CROW_ROUTE(app, "/submit").methods("POST"_method) ([](const crow::request& req) {
 
         auto body = crow::json::load(req.body);
 
@@ -192,14 +244,18 @@ void setupRoutes(crow::SimpleApp& app) {
         std::string recaptchaToken = std::string(body["recaptcha_token"]);
         const char* secret = std::getenv("RECAPTCHA_SECRET");
 
+        // secret token validation
         if (!verifyRecaptcha(recaptchaToken, secret ? secret : "")) {
             return crow::response(403, "reCAPTCHA verification failed.");
         }
 
 
-        if (!body) return crow::response(400, "Invalid JSON");
+        if (!body) {
+            return crow::response(400, "Invalid JSON");
+        }
 
         // Extract data from Application form
+        // Accepts a request body as JSON format
         std::string name = std::string(body["full_name"]);
         std::string email = std::string(body["email"]);
         std::string phone = std::string(body["phone_number"]);
@@ -212,7 +268,7 @@ void setupRoutes(crow::SimpleApp& app) {
         std::string desc = std::string(body["description"]);
         //std::string resume = std::string(body["resume_filename"]);
 
-        // Use Application class
+        // Use Application class to set data
         Application appData;
         appData.SetName(name);
         appData.SetEmail(email);
@@ -229,11 +285,12 @@ void setupRoutes(crow::SimpleApp& app) {
 
         using namespace mysqlx; // MySQL Connector/C++ API
 
-        // Connect to the MySQL server
+        // Connect to the MySQL server and Logs in to database using config file (.env)
         Session session(config_env.GetHostName(), 33060, config_env.GetDbUserName(), config_env.GetDbPass());
-        Schema db = session.getSchema(config_env.GetDbName());
-        Table table = db.getTable("applications");
+        Schema db = session.getSchema(config_env.GetDbName()); // gets the database name
+        Table table = db.getTable("applications"); // gets the table to insert data
 
+        // inserts the data into table
         table.insert("full_name", "email", "phone_number", "address", "apt_number", "city", "state", "zipcode", "is_over18", "description")
 
                 .values(

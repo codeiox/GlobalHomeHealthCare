@@ -8,9 +8,11 @@
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
-            line-height: 1.6;
+            padding: 20px;
+            max-width: 900px;
             background-color: #f9f9f9;
             color: #333;
+            line-height: 1.6;
         }
         h1, h2 {
             color: #0047ab;
@@ -18,9 +20,46 @@
         a {
             color: #0047ab;
         }
+
+        button {
+            background-color: #3498db;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            padding: 10px 16px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
     </style>
-    <a href="../docs/index.html">
-        <button style="background-color: #3498db; border: none; border-radius: 6px">Go back</button>
+    <a href="/">
+            <button style=" border: none; border-radius: 6px"><strong>Go back</strong></button>
     </a>
 </head>
 <body>
