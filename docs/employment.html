@@ -1,55 +1,34 @@
+<!-- employment.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Head Section -->
+    <!-- Usage: Includes metadata, external libraries, CSS files, favicon, and reCAPTCHA -->
+    <!-- Reuse across pages for consistent look and behavior -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Global Home Health Care | Employment</title>
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-            crossorigin="anonymous"
-    />
-
-    <!-- Font awesome -->
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-
-    <!-- css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/form.css" />
-
-    <!--    favicon-->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-
-    <!-- Load reCAPTCHA API; we will need to get google API for this part -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-<!-- Header and Navigation Bar -->
+
+<!-- Header -->
+<!-- Usage: Displays logo, contact info, and address. Keep reusable in all pages -->
 <header>
     <div class="top-header">
         <div class="logo">
-            <img
-                    src="assets/logo/logo_wht_bg.png"
-
-                    alt="Global Home Health Care Logo"
-            />
+            <img src="assets/logo/logo_wht_bg.png" alt="Global Home Health Care Logo" />
             <h1>Global Home Health Care, LLC</h1>
         </div>
         <div class="contact-info">
-            <p>
-                <i class="fas fa-phone-alt"></i> <strong>Phone:</strong> (123)
-                456-7890
-            </p>
+            <p><i class="fas fa-phone-alt"></i> <strong>Phone:</strong> (123) 456-7890</p>
             <p><i class="fas fa-fax"></i> <strong>Fax:</strong> (123) 456-7891</p>
-            <p>
-                <i class="fas fa-envelope"></i>
-                <strong>Email:</strong> info@globalhomehealth.com
-            </p>
+            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> info@globalhomehealth.com</p>
         </div>
         <div class="address-info">
             <p><i class="fas fa-map-marker-alt"></i> <strong>Address</strong></p>
@@ -60,55 +39,35 @@
 </header>
 
 <!-- Navigation Bar -->
+<!-- Usage: Main site navigation, should be reused across all pages -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-
-    <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/about">About Us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/ourservice">Our Services</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/employment">Employment</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/resources">Resources</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/contact">Contact Us</a>
-            </li>
+            <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="/ourservice">Our Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="/employment">Employment</a></li>
+            <li class="nav-item"><a class="nav-link" href="/resources">Resources</a></li>
+            <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
         </ul>
     </div>
-    </div>
 </nav>
-<!-- *************************************************************** -->
-<!-- Form -->
 
+<!-- Employment Form Section -->
+<!-- Usage: Form for applicants to submit employment information -->
 <div id="overlay">
-    <form id="appointment-form" action="/submit" method="POST">
+    <form id="appointment-form">
         <h1>Submit Your Information</h1>
 
+        <!-- Basic Information -->
         <label for="name">Full Name<span style="color: red;">*</span></label>
         <input type="text" id="name" name="name" placeholder="Enter name" required>
         <small class="error"></small>
 
-        <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <div style="display: flex; gap: 20px;">
             <div style="flex: 1;">
                 <label for="email">Email<span style="color: red;">*</span></label>
                 <input type="email" id="email" name="email" placeholder="Example@gmail.com" required>
@@ -116,12 +75,13 @@
             </div>
             <div style="flex: 1;">
                 <label for="phone">Phone number<span style="color: red;">*</span></label>
-                <input type="phone" id="phone" name="phone" placeholder="Enter phone number" required>
+                <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
                 <small class="error"></small>
             </div>
         </div>
 
-        <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <!-- Address Fields -->
+        <div style="display: flex; gap: 20px;">
             <div style="flex: 1;">
                 <label for="address">Address<span style="color: red;">*</span></label>
                 <input type="address" id="address" name="address" placeholder="Enter address" required>
@@ -134,74 +94,39 @@
             </div>
         </div>
 
-        <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <!-- City and State -->
+        <div style="display: flex; gap: 20px;">
             <div style="flex: 1;">
                 <label for="city">City<span style="color: red;">*</span></label>
                 <input type="city" id="city" name="city" placeholder="Enter city" required>
                 <small class="error"></small>
             </div>
-
             <div style="flex: 1;">
                 <label for="state">State <span style="color: red;">*</span></label>
                 <input list="states" id="state" name="state" placeholder="Enter or select state" required>
+                <!-- State List -->
                 <datalist id="states">
-                    <option value="Alabama">
-                    <option value="Alaska">
-                    <option value="Arizona">
-                    <option value="Arkansas">
-                    <option value="California">
-                    <option value="Colorado">
-                    <option value="Connecticut">
-                    <option value="Delaware">
-                    <option value="Florida">
-                    <option value="Georgia">
-                    <option value="Hawaii">
-                    <option value="Idaho">
-                    <option value="Illinois">
-                    <option value="Indiana">
-                    <option value="Iowa">
-                    <option value="Kansas">
-                    <option value="Kentucky">
-                    <option value="Louisiana">
-                    <option value="Maine">
-                    <option value="Maryland">
-                    <option value="Massachusetts">
-                    <option value="Michigan">
-                    <option value="Minnesota">
-                    <option value="Mississippi">
-                    <option value="Missouri">
-                    <option value="Montana">
-                    <option value="Nebraska">
-                    <option value="Nevada">
-                    <option value="New Hampshire">
-                    <option value="New Jersey">
-                    <option value="New Mexico">
-                    <option value="New York">
-                    <option value="North Carolina">
-                    <option value="North Dakota">
-                    <option value="Ohio">
-                    <option value="Oklahoma">
-                    <option value="Oregon">
-                    <option value="Pennsylvania">
-                    <option value="Rhode Island">
-                    <option value="South Carolina">
-                    <option value="South Dakota">
-                    <option value="Tennessee">
-                    <option value="Texas">
-                    <option value="Utah">
-                    <option value="Vermont">
-                    <option value="Virginia">
-                    <option value="Washington">
-                    <option value="West Virginia">
-                    <option value="Wisconsin">
-                    <option value="Wyoming">
+                    <!-- All 50 U.S. states -->
+                    <option value="Alabama"><option value="Alaska"><option value="Arizona"><option value="Arkansas">
+                    <option value="California"><option value="Colorado"><option value="Connecticut"><option value="Delaware">
+                    <option value="Florida"><option value="Georgia"><option value="Hawaii"><option value="Idaho">
+                    <option value="Illinois"><option value="Indiana"><option value="Iowa"><option value="Kansas">
+                    <option value="Kentucky"><option value="Louisiana"><option value="Maine"><option value="Maryland">
+                    <option value="Massachusetts"><option value="Michigan"><option value="Minnesota"><option value="Mississippi">
+                    <option value="Missouri"><option value="Montana"><option value="Nebraska"><option value="Nevada">
+                    <option value="New Hampshire"><option value="New Jersey"><option value="New Mexico"><option value="New York">
+                    <option value="North Carolina"><option value="North Dakota"><option value="Ohio"><option value="Oklahoma">
+                    <option value="Oregon"><option value="Pennsylvania"><option value="Rhode Island"><option value="South Carolina">
+                    <option value="South Dakota"><option value="Tennessee"><option value="Texas"><option value="Utah">
+                    <option value="Vermont"><option value="Virginia"><option value="Washington"><option value="West Virginia">
+                    <option value="Wisconsin"><option value="Wyoming">
                 </datalist>
                 <small class="error"></small>
             </div>
         </div>
 
-
-        <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <!-- Zip and Age -->
+        <div style="display: flex; gap: 20px;">
             <div style="flex: 1;">
                 <label for="zip">ZipCode<span style="color: red;">*</span></label>
                 <input type="zip" id="zip" name="zip" placeholder="Enter zipcode" required>
@@ -210,7 +135,7 @@
             <div style="flex: 1;">
                 <label for="age">Are you over 18? <span style="color: red;">*</span></label>
                 <input list="age-options" id="age" name="age" placeholder="Select" required>
-                <datalist id="age-options" name="age" required>
+                <datalist id="age-options">
                     <option value="Yes">
                     <option value="No">
                 </datalist>
@@ -218,42 +143,23 @@
             </div>
         </div>
 
-        <!-- I don't think we need this in employment application.
-
-        <div style="display: flex; gap: 20px; align-items: flex-start;">
-            <div style="flex: 1;">
-                <label for="date">Date <span style="color: red;">*</span></label>
-                <input type="date" id="date" name="date" required>
-                <small class="error"></small>
-            </div>
-            <div style="flex: 1;">
-                <label for="time">Time <span style="color: red;">*</span></label>
-                <input type="time" id="time" name="time" placeholder="Type or select from clock icon" required>
-                <small class="error"></small>
-            </div>
-        </div>
-
-        -->
-
+        <!-- Optional Message -->
         <label for="message">Message</label>
         <textarea id="message" name="description" placeholder="Write something..." rows="3"></textarea>
         <small class="error"></small>
 
-<!--        Temp comment-->
-<!--
+        <!-- Optional Resume Upload (commented out) -->
+        <!--
         <label for="resume">Attach Resume <span style="color: red;">*</span></label>
         <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
         <small class="error"></small>
         -->
 
-        <!--None-breaking spaces-->
-        &nbsp;&nbsp;&nbsp;
-
-        <!-- Add this inside your form -->
-        <!--Google reCAPTCHA data-sitekey-->
+        <!-- Google reCAPTCHA -->
+        <!-- Usage: Prevent bot spam submissions -->
         <div class="g-recaptcha" data-sitekey="6LcIyhwrAAAAABPPmpxfzPWDM-yrrYfb5mZHtlZj" id="recaptcha"></div>
 
-
+        <!-- Submit Button -->
         <div class="center">
             <input type="submit" value="Submit">
             <p id="success"></p>
@@ -261,34 +167,26 @@
     </form>
 </div>
 
+<!-- Bootstrap Script -->
+<!-- Usage: Enables Bootstrap JS functionality -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
-<!-- ****************************************************************************************** -->
-<!-- Bootstrap script -->
-<script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"
-></script>
-
-<!-- script -->
-<script src="js/landing.js"></script>
-
-<!-- script -->
+<!-- Custom Scripts -->
+<!-- Usage: Handle form interactions, logic, or animations -->
 <script src="js/formHandler.js"></script>
-</body>
 
-
-<!-- Add footer here -->
+<!-- Footer -->
+<!-- Usage: Standard footer across site. Should be modularized as partial -->
 <div style="height:200px;"></div>
 <footer style="background-color:#0047ab; color:white; padding:20px; text-align:center;">
     <p>&copy; 2025 Global Home Health Care. All rights reserved.</p>
     <p>
-        <a href="/about">About</a> |
-        <a href="/contact">Contact</a> |
-        <a href="/privacy">Privacy Policy</a> |
-        <a href="/termsAndConditions">Terms and Conditions</a>
+        <a style="color: white" href="/about">About</a> |
+        <a style="color: white" href="/contact">Contact</a> |
+        <a style="color: white" href="/privacy">Privacy Policy</a> |
+        <a style="color: white" href="/termsAndConditions">Terms and Conditions</a>
     </p>
 </footer>
 
+</body>
 </html>

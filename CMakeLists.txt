@@ -60,6 +60,8 @@ add_executable(${PROJECT_NAME}
         src/routesSetUp.cpp
         headers/routesSetUp.h
         headers/config.h
+        src/contact.cpp
+        headers/contact.h
 
 )
 

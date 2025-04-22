@@ -1,7 +1,7 @@
 /* global grecaptcha */
 
 
-document.getElementById("appointment-form").addEventListener("submit", function (e) {
+document.getElementById("appointment-form").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const aptValue = document.getElementById("apt").value.trim();
@@ -17,7 +17,7 @@ document.getElementById("appointment-form").addEventListener("submit", function 
         state: document.getElementById("state").value,
         zipcode: document.getElementById("zip").value,
         is_over18: document.getElementById("age").checked,
-        description: document.getElementById("message").value,
+        description: document.getElementById("message").value
         //resume_filename: document.getElementById("resume").value
     };
 
@@ -38,8 +38,8 @@ document.getElementById("appointment-form").addEventListener("submit", function 
     })
         .then(res => res.text())
         .then(msg => {
-            document.getElementById("success").innerText = msg;
-            setTimeout(() => window.location.reload(), 5000);
+            alert("Your application has been submitted successfully!");
+            setTimeout(() => window.location.reload(), 2000);
         })
         .catch(() => alert("Something went wrong."));
 });

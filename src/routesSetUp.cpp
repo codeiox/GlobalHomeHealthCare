@@ -3,9 +3,11 @@
 //
 #include "../headers/routesSetUp.h"
 #include "../headers/config.h"
+#include "../headers/contact.h"
 #include "curl/curl.h"
 #include <sstream>
 #include <string>
+
 
 // validated reCAPTCHA
 bool verifyRecaptcha(const std::string& token, const std::string& secretKey) {
@@ -34,11 +36,11 @@ bool verifyRecaptcha(const std::string& token, const std::string& secretKey) {
 
 
 
-
+// Routes static website content such as images, HTML, CSS, JavaScript, and more.
 void setupRoutes(crow::SimpleApp& app) {
 
 
-    // Serves index.html page
+    // Serves index.html page via HTTP request
     CROW_ROUTE(app, "/")([]() {
         std::ifstream htmlFile("../docs/index.html");
         if (!htmlFile.is_open())  {
@@ -57,7 +59,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
-    // Serves ourservice.html page
+    // Serves ourservice.html page via HTTP request
     CROW_ROUTE(app, "/ourservice")([]() {
         std::ifstream htmlFile("../docs/ourservice.html");
         if (!htmlFile.is_open()) {
@@ -76,7 +78,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
-    // Serves about.html page
+    // Serves about.html page via HTTP request
     CROW_ROUTE(app, "/about")([]() {
         std::ifstream htmlFile("../docs/about.html");
         if (!htmlFile.is_open()) {
@@ -95,7 +97,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
-    // Serves form.html page
+    // Serves form.html page via HTTP request
     CROW_ROUTE(app, "/form")([]() {
         std::ifstream htmlFile("../docs/form.html");
         if (!htmlFile.is_open()) {
@@ -114,7 +116,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
-    // Serves employment.html page
+    // Serves employment.html page via HTTP request
     CROW_ROUTE(app, "/employment")([]() {
         std::ifstream htmlFile("../docs/employment.html");
         if (!htmlFile.is_open()) {
@@ -133,7 +135,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
-    // Serves resources.html page
+    // Serves resources.html page via HTTP request
     CROW_ROUTE(app, "/resources")([]() {
         std::ifstream htmlFile("../docs/resources.html");
         if (!htmlFile.is_open()) {
@@ -152,7 +154,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
-    // serve contact page
+    // serve contact page via HTTP request
     CROW_ROUTE(app, "/contact")([]() {
         std::ifstream htmlFile("../docs/contact.html");
 
@@ -172,7 +174,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return crow::response(buffer.str());
     });
 
-    // TODO: route to privacy policy page
+    // Serves privacy policy page via HTTP request
     CROW_ROUTE(app, "/privacy")([]() {
         std::ifstream htmlFile("../docs/privacy.html"); // full path to file
 
@@ -193,7 +195,7 @@ void setupRoutes(crow::SimpleApp& app) {
     });
 
 
-    // TODO: routes to terms and conditions page
+    // Serves Terms and Conditions page via HTTP request
     CROW_ROUTE(app, "/termsAndConditions") ([]() {
         std::ifstream htmlFile("../docs/termsAndConditions.html");
         if (!htmlFile.is_open()) { // if file not open
@@ -214,7 +216,7 @@ void setupRoutes(crow::SimpleApp& app) {
 
 
 
-    // TODO: Need to route 404 error page
+    // Serves 404 error page via HTTP request
 
     CROW_ROUTE(app, "/404")([]() {
         std::ifstream file_404("../docs/404.html");
@@ -245,7 +247,7 @@ void setupRoutes(crow::SimpleApp& app) {
 
 
 
-    // serves css file
+    // serves css file via HTTP request
     CROW_ROUTE(app, "/css/<string>")([](const std::string& file) {
         std::ifstream cssFile("../docs/css/" + file);
         if (!cssFile.is_open()) {
@@ -268,7 +270,7 @@ void setupRoutes(crow::SimpleApp& app) {
 
 
 
-    // serves js file
+    // serves js file via HTTP request
     CROW_ROUTE(app, "/js/<string>")([](const std::string& file) {
         std::ifstream js_File("../docs/js/" + file);
         if (!js_File.is_open()) {
@@ -291,7 +293,7 @@ void setupRoutes(crow::SimpleApp& app) {
 
 
 
-    // serves logo
+    // serves logo via HTTP request
     CROW_ROUTE(app, "/assets/logo/<string>")([](const std::string& file) {
         std::ifstream imgContent("../docs/assets/logo/" + file, std::ios::binary);
         if (!imgContent.is_open()) {
@@ -314,7 +316,7 @@ void setupRoutes(crow::SimpleApp& app) {
 
 
 
-    // serves carousel images
+    // serves carousel images via HTTP request
     CROW_ROUTE(app, "/assets/carousel/<string>")([](const std::string& file) {
         std::ifstream imgContent("../docs/assets/carousel/" + file, std::ios::binary);
         if (!imgContent.is_open()) {
@@ -335,7 +337,7 @@ void setupRoutes(crow::SimpleApp& app) {
         return res;
     });
 
-    // about page image
+    // Serves about page image via HTTP request
     CROW_ROUTE(app, "/assets/about_page_img/<string>")([](const std::string& file) {
         std::ifstream imgContent("../docs/assets/about_page_img/" + file, std::ios::binary);
 
@@ -358,7 +360,7 @@ void setupRoutes(crow::SimpleApp& app) {
 
     });
 
-    // favicon.ico icon routing
+    // Serves favicon.ico icon via HTTP request
     CROW_ROUTE(app, "/favicon.ico")([]() {
         std::ifstream favicon_img("../docs/favicon.ico", std::ios::binary);
             if (!favicon_img.is_open()) {
@@ -381,7 +383,7 @@ void setupRoutes(crow::SimpleApp& app) {
     });
 
 
-    // TODO: Need to route contact page image
+    // Serves contact image via HTTP request
     CROW_ROUTE(app, "/assets/contact_page/<string>")([](const std::string& file) {
         std::ifstream imgContent("../docs/assets/contact_page/" + file, std::ios::binary);
         if (!imgContent.is_open()) {
@@ -409,7 +411,8 @@ void setupRoutes(crow::SimpleApp& app) {
     // Define a route for the root URL                    Lambda function
     CROW_ROUTE(app, "/submit").methods("POST"_method) ([](const crow::request& req) {
 
-        auto body = crow::json::load(req.body);
+        auto body = crow::json::load(req.body);  // reads the raw JSON string data from
+                                                        // the request body and parses it into a crow::json::rvalue object
 
         // loading config file
         Config config_env;
@@ -424,8 +427,8 @@ void setupRoutes(crow::SimpleApp& app) {
             return crow::response(403, "reCAPTCHA verification failed.");
         }
 
-
         if (!body) {
+            CROW_LOG_ERROR << "Invalid JSON: " << req.body;
             return crow::response(400, "Invalid JSON");
         }
 
@@ -459,31 +462,98 @@ void setupRoutes(crow::SimpleApp& app) {
 
 
         using namespace mysqlx; // MySQL Connector/C++ API
+        try {
 
-        // Connect to the MySQL server and Logs in to database using config file (.env)
-        Session session(config_env.GetHostName(), 33060, config_env.GetDbUserName(), config_env.GetDbPass());
-        Schema db = session.getSchema(config_env.GetDbName()); // gets the database name
-        Table table = db.getTable("applications"); // gets the table to insert data
 
-        // inserts the data into table
-        table.insert("full_name", "email", "phone_number", "address", "apt_number", "city", "state", "zipcode", "is_over18", "description")
 
-                .values(
-                        appData.GetName(),
-                        appData.GetEmail(),
-                        appData.GetPhoneNumber(),
-                        appData.GetAddress(),
-                        appData.GetAptNumber(),
-                        appData.GetCity(),
-                        appData.GetState(),
-                        appData.GetZipCode(),
-                        appData.GetIsOver18(),
-                        appData.GetDescription()/*,
+            // Connect to the MySQL server and Logs in to database using config file (.env)
+            //              // Host Name              // Port           // username             // password
+            Session session(config_env.GetHostName(), 33060, config_env.GetDbUserName(), config_env.GetDbPass());
+            Schema db = session.getSchema(config_env.GetDbName()); // gets the database name
+            Table table = db.getTable("applications"); // gets the table to insert data
+
+            // inserts the data into table
+            table.insert("full_name", "email", "phone_number", "address", "apt_number", "city", "state", "zipcode", "is_over18", "description")
+
+                    .values(
+                            appData.GetName(),
+                            appData.GetEmail(),
+                            appData.GetPhoneNumber(),
+                            appData.GetAddress(),
+                            appData.GetAptNumber(),
+                            appData.GetCity(),
+                            appData.GetState(),
+                            appData.GetZipCode(),
+                            appData.GetIsOver18(),
+                            appData.GetDescription()/*,
                         appData.GetResumeFilename()*/
-                ).execute();
+                    ).execute();
+        }
+        catch (const mysqlx::Error& err) {
+            CROW_LOG_ERROR << "MySQL error: " << err.what();
+            return crow::response(500, "Database connection or query failed.");
+        }
 
         // Close the session
         return crow::response(200, "Application submitted");
 
     });
+
+
+
+
+    // Route to handle contact form submission and insert data into a separate table
+    CROW_ROUTE(app, "/submit_contact").methods("POST"_method) ([](const crow::request& req) {
+
+        auto body = crow::json::load(req.body);
+        Config config;
+        config.load_env(); // gets the database credentials from .env config file
+        using namespace mysqlx; // MySQL Connector/C++ API
+
+        if (!body) {
+            CROW_LOG_ERROR << "Invalid JSON: " << req.body;
+            return crow::response(400, "Invalid JSON");
+        }
+
+
+        // Extract data from Application form
+        // Accepts a request body as JSON format
+        std::string name = std::string(body["full_name"]);
+        std::string email = std::string(body["email"]);
+        std::string phone = std::string(body["phone_number"]);
+        std::string message = std::string(body["message"]);
+
+
+        // passes the data to class members
+        Contact contactData;
+        contactData.SetName(name);
+        contactData.SetEmail(email);
+        contactData.SetPhone(phone);
+        contactData.SetMessage(message);
+
+        // Connect to the MySQL server and Logs in to database using config file (.env)
+        try {
+            //              // Host Name        // Port         // username         // password
+            Session session(config.GetHostName(), 33060, config.GetDbUserName(), config.GetDbPass());
+            Schema db = session.getSchema(config.GetDbName()); // gets the database name and opens with all credentials
+            Table table = db.getTable("contact_submissions"); // opens the table named contact_submissions in the database
+
+            // Now insert the data into database
+            table.insert("full_name", "email", "phone_number", "message").values(
+                    contactData.GetName(), contactData.GetEmail(), contactData.GetPhone(), contactData.GetMessage()
+            ).execute();
+
+
+        }
+        catch (const mysqlx::Error& err) {
+            CROW_LOG_ERROR << "MySQL error: " << err.what();
+            return crow::response(500, "Database connection or query failed.");
+        }
+
+        // close the session
+        return crow::response(200, "Message has been sent!");
+
+    });
+
+
 }

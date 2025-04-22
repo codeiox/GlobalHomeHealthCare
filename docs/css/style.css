@@ -206,3 +206,46 @@
   z-index: 2;
   position: absolute;
 }
+
+
+/* Resources html video layout styling */
+.content-section {
+  height: 300px; /* Same as container height to scroll one section at a time */
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+}
+.video-item {
+  display: flex;
+  align-items: flex-start;
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.video-details {
+  margin-left: 20px;
+  flex: 1;
+  position: relative;
+}
+
+.video-details h5 {
+  margin-right: 30px;
+}
+
+
+.like-btn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #dc3545;
+}
+
+.like-btn.liked {
+  color: red;
+}
