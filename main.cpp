@@ -1,4 +1,4 @@
-#define CROW_ENABLE_SSL
+//#define CROW_ENABLE_SSL
 #include "crow.h"
 #include <mysqlx/xdevapi.h>
 #include "headers/Application.h"
@@ -51,7 +51,8 @@ int main(int argc, const char* argv[]) {
 
     //Enable SSL for HTTPS request handling
     // secure the connection using cert.pem and key.pem self-signed certificate
-    app.port(18080).ssl_file("../ssl/cert.pem", "../ssl/key.pem").multithreaded().run();
+    //app.port(18080).ssl_file("../ssl/cert.pem", "../ssl/key.pem").multithreaded().run();
+    app.port(18080).multithreaded().run();
 
 
     return 0;

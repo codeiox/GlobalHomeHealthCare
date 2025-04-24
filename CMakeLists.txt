@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 project(GLOBAL_HOME_HEALTH_CARE)
 
 # Set the C++ standard
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -48,6 +48,10 @@ set(CXXTEST_TESTGEN_EXECUTABLE /opt/homebrew/opt/cxxtest/bin/cxxtestgen)
 # Find CxxTest package
 find_package(CxxTest REQUIRED)
 
+
+add_definitions(-DCROW_ENABLE_SSL)
+
+
 # Enable testing
 enable_testing()
 
@@ -88,4 +92,7 @@ target_link_libraries(${PROJECT_NAME}
 #libcurl library
 find_package(CURL REQUIRED)
 
-target_link_libraries(GLOBAL_HOME_HEALTH_CARE PRIVATE CURL::libcurl)
+target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl)
+
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
+

@@ -10,8 +10,8 @@
 
 
 // validated reCAPTCHA
-bool verifyRecaptcha(const std::string& token, const std::string& secretKey) {
-    CURL* curl = curl_easy_init(); //This creates and initializes a new CURL handle
+bool verifyRecaptcha(const std::string &token, const std::string &secretKey) {
+    CURL *curl = curl_easy_init(); //This creates and initializes a new CURL handle
     if (!curl) {
         return false;
     }
@@ -22,10 +22,10 @@ bool verifyRecaptcha(const std::string& token, const std::string& secretKey) {
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postFields.c_str());
 
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION,
-                     +[](char* ptr, size_t size, size_t nmemb, std::string* data) {
-        data->append(ptr, size * nmemb);
-        return size * nmemb;
-    });
+                     +[](char *ptr, size_t size, size_t nmemb, std::string *data) {
+                         data->append(ptr, size * nmemb);
+                         return size * nmemb;
+                     });
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
     CURLcode res = curl_easy_perform(curl);
@@ -35,384 +35,123 @@ bool verifyRecaptcha(const std::string& token, const std::string& secretKey) {
 }
 
 
+// Utility: Manually check if a string ends with a given suffix
+bool endsWith(const std::string &str, const std::string &suffix) {
+    return str.size() >= suffix.size() &&
+           str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+}
+
 
 // Routes static website content such as images, HTML, CSS, JavaScript, and more.
-void setupRoutes(crow::SimpleApp& app) {
+void setupRoutes(crow::SimpleApp &app) {
 
 
-    // Serves index.html page via HTTP request
-    CROW_ROUTE(app, "/")([]() {
-        std::ifstream htmlFile("../docs/index.html");
-        if (!htmlFile.is_open())  {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
+    // Route: Serves static assets (JS, CSS, images) built by Vite under /assets/
+    // Usage: Matches requests like /assets/index-*.js, /assets/index-*.css, etc.
+    // Route: Serves all assets in /dist/assets/** (including subfolders)
+    // Route: Serve any file from /assets/** with correct MIME types
+    CROW_ROUTE(app, "/assets/<path>")
+    ([](const crow::request &, crow::response &res, const std::string &path) {
+        std::ifstream file("../react-ui/dist/assets/" + path, std::ios::binary);
+        if (!file.is_open()) {
             res.code = 404;
-            return res;
+            res.end("Asset not found");
+            return;
         }
-        std::stringstream buffer;
-        buffer << htmlFile.rdbuf();
-        return crow::response(buffer.str());
-    });
 
-    // Serves ourservice.html page via HTTP request
-    CROW_ROUTE(app, "/ourservice")([]() {
-        std::ifstream htmlFile("../docs/ourservice.html");
-        if (!htmlFile.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
-        std::stringstream buffer;
-        buffer << htmlFile.rdbuf();
-        return crow::response(buffer.str());
-    });
-
-    // Serves about.html page via HTTP request
-    CROW_ROUTE(app, "/about")([]() {
-        std::ifstream htmlFile("../docs/about.html");
-        if (!htmlFile.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
-        std::stringstream buffer;
-        buffer << htmlFile.rdbuf();
-        return crow::response(buffer.str());
-    });
-
-    // Serves form.html page via HTTP request
-    CROW_ROUTE(app, "/form")([]() {
-        std::ifstream htmlFile("../docs/form.html");
-        if (!htmlFile.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
-        std::stringstream buffer;
-        buffer << htmlFile.rdbuf();
-        return crow::response(buffer.str());
-    });
-
-    // Serves employment.html page via HTTP request
-    CROW_ROUTE(app, "/employment")([]() {
-        std::ifstream htmlFile("../docs/employment.html");
-        if (!htmlFile.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
-        std::stringstream buffer;
-        buffer << htmlFile.rdbuf();
-        return crow::response(buffer.str());
-    });
-
-    // Serves resources.html page via HTTP request
-    CROW_ROUTE(app, "/resources")([]() {
-        std::ifstream htmlFile("../docs/resources.html");
-        if (!htmlFile.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
-        std::stringstream buffer;
-        buffer << htmlFile.rdbuf();
-        return crow::response(buffer.str());
-    });
-
-    // serve contact page via HTTP request
-    CROW_ROUTE(app, "/contact")([]() {
-        std::ifstream htmlFile("../docs/contact.html");
-
-        if (!htmlFile) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
-        std::stringstream buffer;
-        buffer << htmlFile.rdbuf();
-        return crow::response(buffer.str());
-    });
-
-    // Serves privacy policy page via HTTP request
-    CROW_ROUTE(app, "/privacy")([]() {
-        std::ifstream htmlFile("../docs/privacy.html"); // full path to file
-
-        if(!htmlFile.is_open()) { // if file not open
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
-        std::stringstream buffer;
-        buffer << htmlFile.rdbuf(); // redirect buffer
-        return crow::response(buffer.str());
-    });
-
-
-    // Serves Terms and Conditions page via HTTP request
-    CROW_ROUTE(app, "/termsAndConditions") ([]() {
-        std::ifstream htmlFile("../docs/termsAndConditions.html");
-        if (!htmlFile.is_open()) { // if file not open
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
-        std::stringstream buffer; // else
-        buffer << htmlFile.rdbuf(); // redirect buffer
-        return crow::response(buffer.str());
-    });
-
-
-
-    // Serves 404 error page via HTTP request
-
-    CROW_ROUTE(app, "/404")([]() {
-        std::ifstream file_404("../docs/404.html");
-
-        if (!file_404.is_open()) {
-            return crow::response(404);
-        }
-        std::stringstream buffer;
-        buffer << file_404.rdbuf();
-        return crow::response(buffer.str());
-    });
-
-    CROW_ROUTE(app, "/assets/404_page/<string>")([](const std::string& file) {
-        std::ifstream mp4_file("../docs/assets/404_page/" + file, std::ios::binary);
-
-        if (!mp4_file.is_open()) {
-            return crow::response(404);
-        }
-        std::stringstream buffer;
-        buffer << mp4_file.rdbuf();
-        crow::response res(buffer.str());
-        res.set_header("Content-Type", "video/mp4");
-        return res;
-    });
-
-
-
-
-
-
-    // serves css file via HTTP request
-    CROW_ROUTE(app, "/css/<string>")([](const std::string& file) {
-        std::ifstream cssFile("../docs/css/" + file);
-        if (!cssFile.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
-        std::stringstream buffer;
-        buffer << cssFile.rdbuf();
-        crow::response res(buffer.str());
-        res.set_header("Content-Type", "text/css");
-        return res;
-    });
-
-
-
-    // serves js file via HTTP request
-    CROW_ROUTE(app, "/js/<string>")([](const std::string& file) {
-        std::ifstream js_File("../docs/js/" + file);
-        if (!js_File.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
-        std::stringstream buffer;
-        buffer << js_File.rdbuf();
-        crow::response res(buffer.str());
-        res.set_header("Content-Type", "application/javascript");
-        return res;
-    });
-
-
-
-    // serves logo via HTTP request
-    CROW_ROUTE(app, "/assets/logo/<string>")([](const std::string& file) {
-        std::ifstream imgContent("../docs/assets/logo/" + file, std::ios::binary);
-        if (!imgContent.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
-        }
         std::ostringstream buffer;
-        buffer << imgContent.rdbuf();
-        crow::response res(buffer.str());
-        res.set_header("Content-Type", "image/png");
-        return res;
-    });
+        buffer << file.rdbuf();
 
-
-
-    // serves carousel images via HTTP request
-    CROW_ROUTE(app, "/assets/carousel/<string>")([](const std::string& file) {
-        std::ifstream imgContent("../docs/assets/carousel/" + file, std::ios::binary);
-        if (!imgContent.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
+        if (endsWith(path, ".js")) {
+            res.set_header("Content-Type", "application/javascript");
         }
-        std::ostringstream buffer;
-        buffer << imgContent.rdbuf();
-        crow::response res(buffer.str());
-        res.set_header("Content-Type", "image/png");
-        return res;
-    });
-
-    // Serves about page image via HTTP request
-    CROW_ROUTE(app, "/assets/about_page_img/<string>")([](const std::string& file) {
-        std::ifstream imgContent("../docs/assets/about_page_img/" + file, std::ios::binary);
-
-        if (!imgContent.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
+        else if (endsWith(path, ".css")) {
+            res.set_header("Content-Type", "text/css");
         }
-        std::ostringstream buffer;
-        buffer << imgContent.rdbuf(); // redirect buffer
-        crow::response res(buffer.str()); // creates HTTP response (The binary file data is turned into the HTTP response body.)
-        res.set_header("Content-Type", "image/png"); //This tells the browser it’s receiving a PNG image.
-        return res;
+        else if (endsWith(path, ".png")) {
+            res.set_header("Content-Type", "image/png");
+        }
+        else if (endsWith(path, ".jpg") || endsWith(path, ".jpeg")) {
+            res.set_header("Content-Type", "image/jpeg");
+        }
+        else if (endsWith(path, ".webp")) {
+            res.set_header("Content-Type", "image/webp");
+        }
+        else if (endsWith(path, ".woff")) {
+            res.set_header("Content-Type", "font/woff");
+        }
+        else if (endsWith(path, ".woff2")) {
+            res.set_header("Content-Type", "font/woff2");
+        }
+        else {
+            res.set_header("Content-Type", "application/octet-stream");
+        }
 
+        res.write(buffer.str());
+        res.end();
     });
 
-    // Serves favicon.ico icon via HTTP request
-    CROW_ROUTE(app, "/favicon.ico")([]() {
-        std::ifstream favicon_img("../docs/favicon.ico", std::ios::binary);
-            if (!favicon_img.is_open()) {
-                std::ifstream errorPage("../docs/404.html");
-                if (!errorPage.is_open()) {
-                    return crow::response(404, "404 Not Found");
+
+// Fallback: Serves index.html for React Router routes like /home, /contact, etc.
+    CROW_ROUTE(app, "/")
+            ([](const crow::request &, crow::response &res) {
+                std::ifstream file("../react-ui/dist/index.html");
+                if (!file.is_open()) {
+                    res.code = 404;
+                    res.end("index.html not found");
+                    return;
                 }
-                std::stringstream errorBuffer;
-                errorBuffer << errorPage.rdbuf();
-                crow::response res(errorBuffer.str());
-                res.code = 404;
-                return res;
-            }
 
-            std::ostringstream buffer;
-            buffer << favicon_img.rdbuf();
-            auto res = crow::response(buffer.str());
-            res.set_header("Content-Type", "image/x-icon");
-            return res;
+                std::stringstream buffer;
+                buffer << file.rdbuf();
+                res.set_header("Content-Type", "text/html");
+                res.write(buffer.str()); // adds content to the response body.
+                res.end(); //finalizes and sends the response to the client.
+            });
+
+
+    CROW_ROUTE(app, "/<path>")
+    ([](const crow::request &req, crow::response &res, const std::string& /*path*/) {
+        std::ifstream file("../react-ui/dist/index.html");
+        if (!file.is_open()) {
+            res.code = 404;
+            res.end("index.html not found");
+            return;
+        }
+
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        res.set_header("Content-Type", "text/html");
+        res.write(buffer.str()); // adds content to the response body.
+        res.end(); // finalizes and sends the response to the client.
     });
 
 
-    // Serves contact image via HTTP request
-    CROW_ROUTE(app, "/assets/contact_page/<string>")([](const std::string& file) {
-        std::ifstream imgContent("../docs/assets/contact_page/" + file, std::ios::binary);
-        if (!imgContent.is_open()) {
-            std::ifstream errorPage("../docs/404.html");
-            if (!errorPage.is_open()) {
-                return crow::response(404, "404 Not Found");
-            }
-            std::stringstream errorBuffer;
-            errorBuffer << errorPage.rdbuf();
-            crow::response res(errorBuffer.str());
-            res.code = 404;
-            return res;
+
+    // Serves favicon.ico via HTTP request
+    CROW_ROUTE(app, "/favicon.ico")([]() {
+        std::ifstream favicon("../react-ui/dist/favicon.ico", std::ios::binary);
+        if (!favicon.is_open()) {
+            return crow::response(404, "favicon.ico not found");
         }
+
         std::ostringstream buffer;
-        buffer << imgContent.rdbuf();
+        buffer << favicon.rdbuf();
         crow::response res(buffer.str());
-        res.set_header("Content-Type", "image/png");
+        res.set_header("Content-Type", "image/x-icon");
         return res;
     });
+
 
 
 
 
 
     // Define a route for the root URL                    Lambda function
-    CROW_ROUTE(app, "/submit").methods("POST"_method) ([](const crow::request& req) {
+    CROW_ROUTE(app, "/submit").methods("POST"_method)([](const crow::request &req) {
 
         auto body = crow::json::load(req.body);  // reads the raw JSON string data from
-                                                        // the request body and parses it into a crow::json::rvalue object
+        // the request body and parses it into a crow::json::rvalue object
 
         // loading config file
         Config config_env;
@@ -420,7 +159,7 @@ void setupRoutes(crow::SimpleApp& app) {
 
         //reCaptcha validation
         std::string recaptchaToken = std::string(body["recaptcha_token"]);
-        const char* secret = std::getenv("RECAPTCHA_SECRET");
+        const char *secret = std::getenv("RECAPTCHA_SECRET");
 
         // secret token validation
         if (!verifyRecaptcha(recaptchaToken, secret ? secret : "")) {
@@ -489,7 +228,7 @@ void setupRoutes(crow::SimpleApp& app) {
                         appData.GetResumeFilename()*/
                     ).execute();
         }
-        catch (const mysqlx::Error& err) {
+        catch (const mysqlx::Error &err) {
             CROW_LOG_ERROR << "MySQL error: " << err.what();
             return crow::response(500, "Database connection or query failed.");
         }
@@ -503,7 +242,7 @@ void setupRoutes(crow::SimpleApp& app) {
 
 
     // Route to handle contact form submission and insert data into a separate table
-    CROW_ROUTE(app, "/submit_contact").methods("POST"_method) ([](const crow::request& req) {
+    CROW_ROUTE(app, "/submit_contact").methods("POST"_method)([](const crow::request &req) {
 
         auto body = crow::json::load(req.body);
         Config config;
@@ -545,7 +284,7 @@ void setupRoutes(crow::SimpleApp& app) {
 
 
         }
-        catch (const mysqlx::Error& err) {
+        catch (const mysqlx::Error &err) {
             CROW_LOG_ERROR << "MySQL error: " << err.what();
             return crow::response(500, "Database connection or query failed.");
         }

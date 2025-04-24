@@ -1,0 +1,64 @@
+/* Styles for the custom Navbar */
+.custom-navbar {
+  padding: 1rem; /* Add space around the Navbar */
+}
+
+/* Styles for the brand text in the Navbar */
+.custom-brand {
+  font-size: 1.2rem; /* Increase font size for the brand */
+}
+
+/* Styles for the navigation links */
+.custom-nav .custom-link {
+  font-size: 1.2rem; /* Increase font size for links */
+  margin-right: 1rem; /* Add space between links */
+}
+
+/* Responsive styles for smaller devices */
+@media (max-width: 768px) {
+  .custom-navbar {
+    padding: 0.5rem; /* Reduce padding on smaller devices */
+  }
+}
+
+/* Ensure the table background is transparent */
+.custom-table {
+  background-color: transparent !important; /* Override any default styles */
+  border-collapse: collapse; /* Ensure no gaps between table cells */
+}
+
+/* Remove any Bootstrap-specific table background styles */
+.table-borderless tbody tr td {
+  background-color: transparent !important; /* Ensure table cells are transparent */
+}
+
+/* Ensure table text color is white */
+.custom-table td, .custom-table th {
+  color: white !important; /* Force text color to white */
+}
+
+/* Styles for the contact image container */
+.contact-img-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem; /* Add padding to left and right */
+}
+
+.contact-img-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-bottom: 4px solid #0047ab; /* Add bottom border */
+}
+
+.contact-img-container .text-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+  padding: 0.5rem;
+}
