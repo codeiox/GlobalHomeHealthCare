@@ -33,6 +33,7 @@ export function Contact() {
         {/* Adding vertical space */}
       </>
       <Footer /> {/* Footer bar */}
+      {/*xxxx*/}
     </>
   );
 }
