@@ -3,10 +3,10 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Carousel from "react-bootstrap/Carousel"; // Import Carousel component from react-bootstrap
 import "../index.css"; // Import global styles
-import logo from "/assets/logo.png"; // Import the logo image
+const logo = import.meta.env.BASE_URL + "assets/logo/logo_wht_bg.png"; // Import the logo image
 import "../ServicesSection.css"; // Import ServicesSection styles
 import "bootstrap-icons/font/bootstrap-icons.css";
-// <FontAwesomeIcon icon={faPhoneAlt} />
+import { Link } from "react-router-dom";
 
 // Header component for the top section of the page
 export function Header() {
@@ -53,22 +53,22 @@ export function NavBar() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto custom-nav">
               {/* Navigation links */}
-              <Nav.Link href="/" className="custom-link">
+              <Nav.Link as={Link} to="/" className="custom-link">
                 Home
               </Nav.Link>
-              <Nav.Link href="/about" className="custom-link">
+              <Nav.Link as={Link} to="/about" className="custom-link">
                 About
               </Nav.Link>
-              <Nav.Link href="/service" className="custom-link">
+              <Nav.Link as={Link} to="/service" className="custom-link">
                 Service
               </Nav.Link>
-              <Nav.Link href="/employment" className="custom-link">
+              <Nav.Link as={Link} to="/employment" className="custom-link">
                 Employment
               </Nav.Link>
-              <Nav.Link href="/resource" className="custom-link">
+              <Nav.Link as={Link} to="/resource" className="custom-link">
                 Resources
               </Nav.Link>
-              <Nav.Link href="/contact" className="custom-link">
+              <Nav.Link as={Link} to="/contact" className="custom-link">
                 Contact
               </Nav.Link>
             </Nav>
@@ -80,6 +80,8 @@ export function NavBar() {
 }
 
 // Carousel_Comp component for the image carousel
+
+// TODO: Carousel needs work to make it more responsive across all device.
 export function Carousel_Comp() {
   return (
     <Carousel interval={3000}>
@@ -88,7 +90,7 @@ export function Carousel_Comp() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="/assets/carousel/healthcare2.png" // Ensure this path is correct
+          src={import.meta.env.BASE_URL + "/assets/carousel/healthcare2.png"} // Ensure this path is correct
           alt="First slide"
           style={{ height: "590px", objectFit: "cover" }} // Adjust height and fit
         />
@@ -100,7 +102,7 @@ export function Carousel_Comp() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="/assets/carousel/healthcare1.png" // Replace with the actual path to your image
+          src={import.meta.env.BASE_URL + "/assets/carousel/healthcare1.png"} // Replace with the actual path to your image
           alt="Second slide"
           style={{ height: "590px", objectFit: "cover" }}
         />
@@ -112,7 +114,7 @@ export function Carousel_Comp() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="/assets/carousel/healthcare2.png" // Replace with the actual path to your image
+          src={import.meta.env.BASE_URL + "/assets/carousel/healthcare2.png"} // Replace with the actual path to your image
           alt="Third slide"
           style={{ height: "590px", objectFit: "cover" }}
         />
@@ -218,7 +220,7 @@ export function BodyContent() {
           {/* Image Section */}
           <div className="col-md-6 mb-4 mb-md-0">
             <img
-              src="/assets/home/sideimg1.png"
+              src={import.meta.env.BASE_URL + "/assets/home/sideimg1.png"}
               alt="Healthcare Support"
               className="img-fluid"
               style={{ borderRadius: "10px" }}
@@ -366,31 +368,27 @@ export function Footer() {
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
               <li>
-                <a
-                  href="/Users/codex/Developer/Job_training_project/GlobalHomeHealthCare-main/react-ui/src/Home"
-                  className="text-white"
-                >
+                <Link to={"/"} className="text-white">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/about" className="text-white">
+                <Link to={"/about"} className="text-white">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/service" className="text-white">
+                <Link to={"/service"} className="text-white">
                   Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/Users/codex/Developer/Job_training_project/GlobalHomeHealthCare-main/react-ui/src/Contact"
-                  className="text-white"
-                >
+                <Link to={"/contact"} className="text-white">
                   Contact
-                </a>
+                </Link>
               </li>
+
+              {/* Add more links */}
             </ul>
           </div>
 
@@ -488,7 +486,7 @@ export function ContactSideImageSection() {
   return (
     <>
       <img
-        src="/assets/about_page_img/sideimg.png"
+        src={import.meta.env.BASE_URL + "/assets/about_page_img/sideimg.png"}
         className="img-fluid rounded"
         style={{
           width: "100%",
@@ -936,7 +934,10 @@ export function VidoeContent() {
                 }}
                 controls
               >
-                <source src={`video${n}.mp4`} type="video/mp4" />
+                <source
+                  src={import.meta.env.BASE_URL + "videos/video" + n + ".mp4"}
+                  type="video/mp4"
+                />
               </video>
               <div className="card-body">
                 <h5
@@ -962,9 +963,6 @@ export function VidoeContent() {
     </>
   );
 }
-
-// How to Insert video
-// <source src={`/videos/video${n}.mp4`} type="video/mp4" />
 
 //***************************************************************************************************************************** */
 
