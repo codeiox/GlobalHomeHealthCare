@@ -1,0 +1,35 @@
+/* contact page style*/
+
+
+
+.sendMessageButton {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.sendMessage {
+    padding-left: 0.7rem;
+    margin-top: 100px;
+
+
+}
+
+.sendButton {
+    padding-top: 0.4rem;
+    padding-left: 0.6rem;
+}
+
+
+
+.contactSubtitle {
+    color: black;
+    padding: 10px;
+    margin-left: 12px;
+    border-left: 10px groove skyblue;
+    border-top: 10px groove skyblue;
+    border-bottom: 0.5px groove skyblue;
+    border-right: 1px groove skyblue;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+}

@@ -7,6 +7,7 @@ import {
   ContactSideImageSection,
   SocialLinks,
 } from "./components/Components.tsx";
+import "./css/About.css";
 
 // import AboutImg from "/assets/about_page_img/about.png";
 
@@ -17,21 +18,7 @@ export function About() {
       <NavBar />
       {/*<ContactImg1 image={AboutImg} />*/}
       <BreadcrumbNav current={"About"} />
-      <h4
-        style={{
-          padding: "15px",
-          paddingLeft: "15px",
-          borderLeft: "10px groove skyblue",
-          borderTop: "10px groove skyblue",
-          borderBottom: "0.5px groove skyblue",
-          borderRight: "1px groove skyblue",
-          borderTopRightRadius: "50px",
-          borderBottomLeftRadius: "50px",
-          margin: 0,
-          color: "black",
-          marginTop: "10px",
-        }}
-      >
+      <h4 className={"aboutSubtitle"}>
         Combining experience and professionalism in providing care.
       </h4>
       <div className="container-fluid my-5">

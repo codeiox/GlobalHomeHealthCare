@@ -6,8 +6,8 @@ import {
   ContactPageLayout,
   SendButton,
   SendMessageForm,
-} from "./components/Components.tsx";
-// import ContactTopImg from "/assets/contact_page/contact.png";
+} from "./components/Components";
+import "./css/Contact.css";
 
 export function Contact() {
   return (
@@ -18,12 +18,10 @@ export function Contact() {
       {/* Current Page Indicator (e.g., Home > Contact) */}
       <ContactPageLayout />{" "}
       {/* Side Image and Info Layout (description, hours, social links) */}
-      <div style={{ maxWidth: "600px", margin: "0 auto", padding: "1rem" }}>
-        <h3 style={{ paddingLeft: "0.7rem", marginTop: "100px" }}>
-          Send us message!
-        </h3>
+      <div className="sendMessageButton">
+        <h3 className={"sendMessage"}>Send us message!</h3>
         <SendMessageForm /> {/* Contact Form Inputs (Name, Email, Message) */}
-        <div style={{ paddingTop: "0.4rem", paddingLeft: "0.6rem" }}>
+        <div className={"sendButton"}>
           <SendButton /> {/* Send Button for Form */}
         </div>
       </div>

@@ -7,6 +7,7 @@ const logo = import.meta.env.BASE_URL + "assets/logo/logo_wht_bg.png"; // Import
 import "../ServicesSection.css"; // Import ServicesSection styles
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";
+import "../css/Service.css";
 
 // Header component for the top section of the page
 export function Header() {
@@ -90,7 +91,7 @@ export function Carousel_Comp() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src={import.meta.env.BASE_URL + "/assets/carousel/healthcare2.png"} // Ensure this path is correct
+          src={import.meta.env.BASE_URL + "assets/carousel/healthcare2.png"} // Ensure this path is correct
           alt="First slide"
           style={{ height: "590px", objectFit: "cover" }} // Adjust height and fit
         />
@@ -102,7 +103,7 @@ export function Carousel_Comp() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src={import.meta.env.BASE_URL + "/assets/carousel/healthcare1.png"} // Replace with the actual path to your image
+          src={import.meta.env.BASE_URL + "assets/carousel/healthcare1.png"} // Replace with the actual path to your image
           alt="Second slide"
           style={{ height: "590px", objectFit: "cover" }}
         />
@@ -114,7 +115,7 @@ export function Carousel_Comp() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src={import.meta.env.BASE_URL + "/assets/carousel/healthcare2.png"} // Replace with the actual path to your image
+          src={import.meta.env.BASE_URL + "assets/carousel/healthcare2.png"} // Replace with the actual path to your image
           alt="Third slide"
           style={{ height: "590px", objectFit: "cover" }}
         />
@@ -220,7 +221,7 @@ export function BodyContent() {
           {/* Image Section */}
           <div className="col-md-6 mb-4 mb-md-0">
             <img
-              src={import.meta.env.BASE_URL + "/assets/home/sideimg1.png"}
+              src={import.meta.env.BASE_URL + "assets/home/sideimg1.png"}
               alt="Healthcare Support"
               className="img-fluid"
               style={{ borderRadius: "10px" }}
@@ -429,7 +430,6 @@ export function Footer() {
 //***************************************************************************************************************************** */
 
 // Contact Top image component
-
 type Props = {
   image: string;
 };
@@ -444,7 +444,7 @@ export function ContactImg1({ image }: Props) {
         style={{ backgroundColor: "#0047ab" }}
       >
         <img
-          src={image} /*"/assets/contact_page/contact.png"*/
+          src={image}
           className="img-fluid"
           width="100%"
           height="80"
@@ -486,7 +486,7 @@ export function ContactSideImageSection() {
   return (
     <>
       <img
-        src={import.meta.env.BASE_URL + "/assets/about_page_img/sideimg.png"}
+        src={import.meta.env.BASE_URL + "assets/about_page_img/sideimg.png"}
         className="img-fluid rounded"
         style={{
           width: "100%",
@@ -633,18 +633,19 @@ export function ContactPageLayout() {
   return (
     <div
       style={{
-        backgroundColor: "#F8F4E1",
+        backgroundColor: "#F5F5F5",
         color: "white",
-        padding: "1rem 2rem",
-        borderRadius: "0 240px 240px 0",
+        padding: "1rem",
+        borderRadius: "4rem 4rem 4rem 4rem",
+        borderStyle: "outset",
+        borderWidth: "1px",
         display: "inline-block",
-        margin: "1rem 0",
-        boxShadow: "10px 3px 10px rgba(0, 2, 5, 0.8)",
+        overflow: "hidden",
       }}
     >
-      <h3 style={{ margin: 0, color: "black", marginTop: "30px" }}>
-        <b>Combining experience and professionalism in providing care.</b>
-      </h3>
+      <h4 className={"contactSubtitle"}>
+        Combining experience and professionalism in providing care.
+      </h4>
 
       <div className="container-fluid my-5">
         <div className="row justify-content-center gx-5">
@@ -712,22 +713,22 @@ export function SendMessageForm() {
 }
 
 // Submit button using Material UI
-import Button from "@mui/material/Button";
+import MuiButton from "@mui/material/Button";
 
 export function SubmitButton() {
   return (
-    <Button variant="contained" color="primary" type="submit" sx={{ mt: 2 }}>
+    <MuiButton variant="contained" color="primary" type="submit" sx={{ mt: 2 }}>
       Submit
-    </Button>
+    </MuiButton>
   );
 }
 
 // Send button using Material UI
 export function SendButton() {
   return (
-    <Button variant="contained" color="primary" type="submit" sx={{ mt: 2 }}>
+    <MuiButton variant="contained" color="primary" type="submit" sx={{ mt: 2 }}>
       Send
-    </Button>
+    </MuiButton>
   );
 }
 
@@ -965,6 +966,57 @@ export function VidoeContent() {
 }
 
 //***************************************************************************************************************************** */
+// Service page components
+
+export function TopServiceComp() {
+  return (
+    <div className={"outer-wrapper"}>
+      <div className={"text-content"}>
+        <h1>We're Here to Help You Age in Your Own Home</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+      <div className={"image-content"}>
+        <img
+          className={"image-src"}
+          src={import.meta.env.BASE_URL + "assets/service_img/serviceimg1.png"}
+          alt="Care taker women looking elderly at wheelchair" // Adjust height and fit
+        />
+      </div>
+    </div>
+  );
+}
+
+// Bootstrap cart
+import Card from "react-bootstrap/Card";
+import BootstrapButton from "react-bootstrap/Button";
+
+export function MiddleServiceComp() {
+  return (
+    <div className={"Card-Container"}>
+      <div className={"card-component"}>
+        <Card style={{ width: "18rem" }}>
+          <Card.Img variant="top" src="holder.js/100px180" />
+          <Card.Body>
+            <Card.Title>Card Title</Card.Title>
+            <Card.Text>
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </Card.Text>
+            <BootstrapButton variant="primary">Go somewhere</BootstrapButton>
+          </Card.Body>
+        </Card>
+      </div>
+    </div>
+  );
+}
 
 //***************************************************************************************************************************** */
 

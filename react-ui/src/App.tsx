@@ -9,7 +9,7 @@ import { Employment } from "./Employment.tsx"; // Import custom styles
 
 export default function App() {
   return (
-    <Router basename={"/GlobalHomeHealthCare"}>
+    <Router basename={"/"}>
       <Routes>
         <Route path="/" element={<Home />} /> {/* Loads Home at "/" */}
         <Route path="/about" element={<About />} />
