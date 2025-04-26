@@ -1,0 +1,43 @@
+.video-card {
+    display: flex;
+    align-items: center;
+    padding: 2%;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.video-thumbnail {
+    width: 160px;
+    height: 100px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.video-info {
+    flex: 1;
+    margin-left: 1rem;
+}
+
+.video-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.video-info p {
+    margin: 0.25rem 0 0;
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+.video-like {
+    margin-left: auto;
+    padding-right: 5%;
+    color: #6b7280;
+}
+
+.video-like:hover {
+    color: red;
+}

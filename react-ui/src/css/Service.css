@@ -27,6 +27,29 @@
     border-radius: 12px;
 }
 
+
+.breadcrumb-tab {
+    margin-top: 7px;
+}
+
+.breadcrumb-tab1:hover {
+    color: #3498db;
+}
+.breadcrumb-tab1:active {
+    color: #2c80b4;
+}
+
+
+.breadcrumb-tab2:hover {
+    color: #3498db;
+}
+.breadcrumb-tab2:active {
+    color: #2c80b4;
+}
+
+
+
+
 /* Responsive behavior */
 @media (max-width: 768px) {
     .outer-wrapper {

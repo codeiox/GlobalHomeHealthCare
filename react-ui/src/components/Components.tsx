@@ -472,9 +472,15 @@ type BreadcrumbNavProps = {
 // Usage: Displays "Home > [Current Page]"
 export function BreadcrumbNav({ current }: BreadcrumbNavProps) {
   return (
-    <div style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
+    <div
+      className={"breadcrumb-tab"}
+      style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
+    >
       <p>
-        Home <span>&gt;</span> {current}
+        <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
+          <b className={"breadcrumb-tab1"}>Home &nbsp;</b>
+        </Link>
+        <span>&gt;</span> <b className={"breadcrumb-tab2"}>{current}</b>
         <hr />
       </p>
     </div>
