@@ -1,0 +1,122 @@
+.form-wrapper {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+form{
+    display:flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.box label {
+    flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"], 
+input[type="file"],
+select,
+textarea {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+}
+
+
+.submit-box input[type="submit"] {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-box input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+textarea {
+    resize: vertical;
+  }
+  
+
+label {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+label span {
+    position: absolute;
+    left: -10px;
+    top: 3px;
+    color: red;
+}
+input[type="file"] {
+    width: 100%;
+}
+
+select {
+    font-size: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+option {
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .box label {
+      flex: 1 1 100%;
+    }
+  }
+  
+
+  .custom-dropdown {
+    position: relative;
+    width: 100%;
+  }
+  
+  .custom-dropdown-header {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer;
+  }
+  
+  .custom-dropdown-list {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+  }
+  
+  .custom-dropdown-item {
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .custom-dropdown-item:hover {
+    background-color: #f0f0f0;
+  }
+  
